@@ -26,14 +26,26 @@ spec:
       labels:
         name: wso2esb-default
     spec:
+      volumes:
+      -
+        name: secret-volume
+        secret:
+          secretName: esb-secret
       containers:
       -
         name: wso2esb-default
-        image: wso2/esb-4.9.0:1.0.0
+        image: wso2esb:4.9.0
+        volumeMounts:
+        -
+          name: secret-volume
+          mountPath: /etc/secret-volume
 #        env:
 #        -
 #          name: KEY_STORE_PASSWORD
-#          value: wso2carbon
+#          valueFrom:
+#            secretKeyRef:
+#              name: esb-secret
+#              key: key-store-password
         ports:
         -
           containerPort: 8280
